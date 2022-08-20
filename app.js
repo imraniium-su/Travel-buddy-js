@@ -23,6 +23,9 @@ var busobject = {
 
 };
 
+
+const servicearray = [carobject, busobject, bikeobject];
+
 function displayservice(service) {
     const mainsection = document.getElementById('main-section');
     const stringifiedobj = JSON.stringify(service);
@@ -50,17 +53,29 @@ function displayservice(service) {
                 </div>
             </div>
         </section>
-    `;
+    `
+        ;
+
     mainsection.appendChild(div);
-    console.log(service);
+
 }
-displayservice(carobject);
-displayservice(busobject);
-displayservice(bikeobject);
+function displayserviceaerticle(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        const element = arr[i];
+        displayservice(bikeobject);
+    }
+}
+displayserviceaerticle(servicearray);
+
+// displayservice(carobject);
+// displayservice(busobject);
+// displayservice(bikeobject);
 
 // handle bookinh 
 function handlebooking(obj) {
     const modalbody = document.getElementById('modal-body');
+    const stringifiedobj = JSON.stringify(obj);
+
 
     modalbody.innerHTML = `
     <div class="card" style="width: 18rem;">
@@ -70,18 +85,31 @@ function handlebooking(obj) {
     <p class="card-text">Description: ${obj.descriptio}</p>
     <p class="card-text"><small class="text-muted">Fare per kilo : ${obj.fareperkilo}</small><br><small class="text-muted">Capasity : ${obj.capasity}</small></p>
     <div class="d-flex flex-column" role="search">
-                    <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
-                    <input class="form-control m-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit" onclick='calculatecost()'>Submit</button>
+    <p>Fare: <small class='text-muted' id='fare'></small></p>
+    <p>Tax: <small class='text-muted' id='tax'></small></p>
+    <p>Tital-cost: <small class='text-muted' id='total-cost'></small></p>
+                    <input class="form-control m-2" id='distance-input' type='number'  placeholder='how many kilo?'  aria-label="Search">
+                    <input class="form-control m-2" id ='quentity-input' type='number'  placeholder='how many car need?'  aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" onclick='calculatecost(${stringifiedobj})'>Submit</button>
                 </div>
     
   </div>
 </div>
     `
+        ;
 
 }
 
-function calculatecost() {
+function calculatecost(obj) {
+    const quantity = document.getElementById('quentity-input').value;
+    const distance = document.getElementById('distance-input').value;
+
+    const faredrive = document.getElementById('fare');
+    faredrive.innerHTML = quantity * distance * obj.fareperkilo;
+    console.log(faredrive);
+
+
 
 }
+
 
